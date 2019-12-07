@@ -58,12 +58,12 @@ resource "aws_iam_role_policy" "read_policy" {
 EOF
 }
 
-resource "null_resource" "subscrition"{
+resource "null_resource" "subscription"{
 
     provisioner "local-exec" {
 
     command = <<EOT
-        for logGroup in $(aws logs describe-log-groups --log-group-name-prefix "/aws/lambda" --profile torus | jq -r '.logGroups[].logGroupName');do
+        for logGroup in $(aws logs describe-log-groups --log-group-name-prefix "/aws/lambda" --profile ${var.aws_profile} | jq -r '.logGroups[].logGroupName');do
             echo "Subscribe to $logGroup"
             aws logs put-subscription-filter --log-group-name "$logGroup" \
                 --filter-name "parse-logs" --filter-pattern "${var.SUBSCRIPTION_FILTER_PATTERN}" \
