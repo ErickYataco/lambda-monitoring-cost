@@ -1,0 +1,7 @@
+ssh/
+*.tfvars
+*.tfstate
+*.tfstate.backup
+.terraform
+*.zip
+node_modules
